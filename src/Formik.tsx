@@ -379,9 +379,9 @@ export class Formik<Values = FormikValues> extends React.Component<
     }
   };
 
-  setFieldValue = (
-    field: string,
-    value: any,
+  setFieldValue = <Field extends keyof Values>(
+    field: Field,
+    value: Values[Field],
     shouldValidate: boolean = true
   ) => {
     if (this.didMount) {
@@ -389,7 +389,7 @@ export class Formik<Values = FormikValues> extends React.Component<
       this.setState(
         prevState => ({
           ...prevState,
-          values: setIn(prevState.values, field, value),
+          values: setIn(prevState.values, field as string, value),
         }),
         () => {
           if (this.props.validateOnChange && shouldValidate) {
